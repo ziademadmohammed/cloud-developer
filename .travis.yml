@@ -5,30 +5,30 @@ node_js:
 services:
   - docker
 
-branches:
-  only:
-    - feed-api
-    - user-api
+# branches:
+#   only:
+#     - feed-api
+#     - user-api
 
-feed-api:
+# feed-api:
   # Pre-testing installs
-  install:
-    - echo "nothing needs to be installed"
+install:
+  - echo "nothing needs to be installed"
 
-  # Scripts to be run such as tests
-  before_script:
-    - echo "no tests"
+# Scripts to be run such as tests
+before_script:
+  - echo "no tests"
 
-  script:
-    - cd ./course-03/project/udagram-restapi-feed/
-    - docker --version # print the version for logging
-    - docker build -t api-users .
-    - docker tag api-users ziademad/udagram-feed:latest
+script:
+  - cd ./course-03/project/udagram-restapi-feed/
+  - docker --version # print the version for logging
+  - docker build -t api-users .
+  - docker tag api-users ziademad/udagram-feed:latest
 
-  after_success:
-    - cd ./course-03/project/udagram-restapi-feed/
-    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    - docker push ziademad/udagram-feed:latest
+after_success:
+  - cd ./course-03/project/udagram-restapi-feed/
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push ziademad/udagram-feed:latest
 
 # user-api:
 #   # Pre-testing installs
