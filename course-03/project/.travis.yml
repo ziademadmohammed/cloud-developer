@@ -1,0 +1,47 @@
+language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+branches:
+  only:
+    - feed-api
+    - user-api
+
+feed-api:
+  # Pre-testing installs
+  install:
+    - echo "nothing needs to be installed"
+
+  # Scripts to be run such as tests
+  before_script:
+    - echo "no tests"
+
+  script:
+    - docker --version # print the version for logging
+    - docker build -t api-users .
+    - docker tag api-users ziademad/udagram-feed:latest
+
+  after_success:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker push ziademad/udagram-feed:latest
+
+user-api:
+  # Pre-testing installs
+  install:
+    - echo "nothing needs to be installed"
+
+  # Scripts to be run such as tests
+  before_script:
+    - echo "no tests"
+
+  script:
+    - docker --version # print the version for logging
+    - docker build -t api-feed .
+    - docker tag api-feed ziademad/udagram-feed:latest
+
+  after_success:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker push ziademad/udagram-feed:latest
