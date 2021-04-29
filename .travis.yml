@@ -26,7 +26,7 @@ jobs:
         - cd ./course-03/project/udagram-restapi-feed/
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push ziademad/udagram-feed:latest
-        
+
     - stage: user-api
       install:
         - echo "nothing needs to be installed"
@@ -42,6 +42,22 @@ jobs:
         - cd ./course-03/project/udagram-restapi-user/
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push ziademad/udagram-user:latest
+
+    - stage: client-ui
+      install:
+        - echo "nothing needs to be installed"
+      # Scripts to be run such as tests
+      before_script:
+        - echo "no tests"
+      script:
+        - cd ./course-03/project/udagram-frontend/
+        - docker --version # print the version for logging
+        - docker build -t udagram-frontend .
+        - docker tag udagram-frontend ziademad/udagram-frontend:latest
+      after_success:
+        - cd ./course-03/project/udagram-frontend/
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push ziademad/udagram-frontend:latest
         
 
   # user-api:
