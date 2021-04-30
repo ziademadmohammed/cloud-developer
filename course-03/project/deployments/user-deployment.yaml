@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    service: udagram-user
+  name: udagram-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: udagram-user
+  template:
+    metadata:
+      labels:
+        service: udagram-user
+    spec:
+      containers:
+        - image: ziademad/udagram-user
+          name: udagram-user
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 8080
+      restartPolicy: Always
+      volumes:
+        - name: aws-secret
+          secret:
+            secretName: aws-secret
