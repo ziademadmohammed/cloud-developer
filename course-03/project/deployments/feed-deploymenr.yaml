@@ -66,6 +66,28 @@ spec:
                 secretKeyRef:
                   name: env-secret
                   key: POSTGRESS_USERNAME
+
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: POSTGRES_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: POSTGRES_DB
+            - name: POSTGRES_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: env-config
+                  key: POSTGRES_HOST
+
       restartPolicy: Always
       volumes:
         - name: aws-secret
