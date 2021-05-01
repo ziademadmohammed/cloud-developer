@@ -1,0 +1,100 @@
+language: node_js
+node_js:
+  - 13
+
+services:
+  - docker
+
+# branches:
+#   only:
+#     - feed-api
+#     - user-api
+jobs:
+  include:
+    - stage: feed-api
+      install:
+        - echo "nothing needs to be installed"
+      # Scripts to be run such as tests
+      before_script:
+        - echo "no tests"
+      script:
+        - cd ./course-03/project/udagram-restapi-feed/
+        - docker --version # print the version for logging
+        - docker build -t api-users .
+        - docker tag api-users ziademad/udagram-feed:latest
+      after_success:
+        - cd ./course-03/project/udagram-restapi-feed/
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push ziademad/udagram-feed:latest
+
+    - stage: user-api
+      install:
+        - echo "nothing needs to be installed"
+      # Scripts to be run such as tests
+      before_script:
+        - echo "no tests"
+      script:
+        - cd ./course-03/project/udagram-restapi-user/
+        - docker --version # print the version for logging
+        - docker build -t api-users .
+        - docker tag api-users ziademad/udagram-user:latest
+      after_success:
+        - cd ./course-03/project/udagram-restapi-user/
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push ziademad/udagram-user:latest
+
+    - stage: client-ui
+      install:
+        - echo "nothing needs to be installed"
+      # Scripts to be run such as tests
+      before_script:
+        - echo "no tests"
+      script:
+        - cd ./course-03/project/udagram-frontend/
+        - docker --version # print the version for logging
+        - docker build -t udagram-frontend .
+        - docker tag udagram-frontend ziademad/udagram-frontend:latest
+      after_success:
+        - cd ./course-03/project/udagram-frontend/
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push ziademad/udagram-frontend:latest
+
+    - stage: reverseproxy
+      install:
+        - echo "nothing needs to be installed"
+      # Scripts to be run such as tests
+      before_script:
+        - echo "no tests"
+      script:
+        - cd ./course-03/project/reverse-proxy/
+        - docker --version # print the version for logging
+        - docker build -t reverse-proxy .
+        - docker tag reverse-proxy ziademad/reverse-proxy:latest
+      after_success:
+        - cd ./course-03/project/reverse-proxy/
+        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - docker push ziademad/reverse-proxy:latest
+        
+
+  # user-api:
+  #   # Pre-testing installs
+  #   install:
+  #     - echo "nothing needs to be installed"
+
+  #   # Scripts to be run such as tests
+  #   before_script:
+  #     - echo "no tests"
+
+  #   script:
+  #     - cd ./course-03/project/udagram-restapi-user/
+  #     - docker --version # print the version for logging
+  #     - docker build -t api-feed .
+  #     - docker tag api-feed ziademad/udagram-feed:latest
+
+  #   after_success:
+  #     - cd ./course-03/project/udagram-restapi-user/
+  #     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  #     - docker push ziademad/udagram-feed:latest
+# feed-api:
+# Pre-testing installs
+

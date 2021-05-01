@@ -17,7 +17,6 @@ describe('AuthMenuUserPage', () => {
         return modalSpy;
     });
 
-
     TestBed.configureTestingModule({
       providers: [
         {
@@ -40,10 +39,4 @@ describe('AuthMenuUserPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  // it('#dismiss() should hide the modal', () => {
-  //     .........
-  //     expect(modalSpy.dismiss).toHaveBeenCalled(); 
-  //     .........
-  // });
 });
