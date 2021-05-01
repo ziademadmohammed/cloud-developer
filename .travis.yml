@@ -66,12 +66,12 @@ jobs:
       before_script:
         - echo "no tests"
       script:
-        - cd ./course-03/project/udagram-frontend/
+        - cd ./course-03/project/reverse-proxy/
         - docker --version # print the version for logging
         - docker build -t reverse-proxy .
         - docker tag reverse-proxy ziademad/reverse-proxy:latest
       after_success:
-        - cd ./course-03/project/udagram-frontend/
+        - cd ./course-03/project/reverse-proxy/
         - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - docker push ziademad/reverse-proxy:latest
         
