@@ -9,7 +9,7 @@ const logger = createLogger('todos-dao')
 
 const XAWS = AWSXRay.captureAWS(AWS)
 
-export class TodosDao {
+export class Todos {
   constructor(
     private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
     private readonly todosTable = process.env.TODOS_TABLE,
