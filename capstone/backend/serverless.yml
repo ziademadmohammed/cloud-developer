@@ -7,7 +7,6 @@ custom:
     webpackConfig: ./webpack.config.js
     includeModules: true
 
-# Add the serverless-webpack plugin
 plugins:
   - serverless-webpack
   - serverless-iam-roles-per-function
@@ -24,7 +23,7 @@ provider:
   region: ${opt:region, 'us-east-2'}
 
   apiGateway:
-    minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+    minimumCompressionSize: 1024 
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     COLLECTIONS_TABLE: Collections-${self:provider.stage}
@@ -44,11 +43,10 @@ functions:
           cors: true
           authorizer: Auth
           request:
-            # Schema that will be used to validate incoming requests
             schema:
               application/json: ${file(models/create-collection-request.json)}
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow" 
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -67,7 +65,7 @@ functions:
           cors: true
           authorizer: Auth
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow" 
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -86,11 +84,10 @@ functions:
           cors: true
           authorizer: Auth
           request:
-            # Schema that will be used to validate incoming requests
             schema:
               application/json: ${file(models/create-image-request.json)}
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow" 
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -117,7 +114,7 @@ functions:
           cors: true
           authorizer: Auth
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow"
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -140,7 +137,7 @@ functions:
           cors: true
           authorizer: Auth
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow"
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -159,7 +156,7 @@ functions:
           cors: true
           authorizer: Auth
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow" 
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -178,7 +175,7 @@ functions:
           cors: true
           authorizer: Auth
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow"
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -197,7 +194,7 @@ functions:
           cors: true
           authorizer: Auth
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow"
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -220,7 +217,7 @@ functions:
           cors: true
           authorizer: Auth
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow" 
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -245,7 +242,7 @@ functions:
           cors: true
           authorizer: Auth
     iamRoleStatements:
-      - Effect: "Allow" # xray permissions (required)
+      - Effect: "Allow"
         Action:
           - "xray:PutTraceSegments"
           - "xray:PutTelemetryRecords"
@@ -303,8 +300,6 @@ resources:
           - AttributeName: timestamp
             KeyType: RANGE
         BillingMode: PAY_PER_REQUEST
-        # StreamSpecification:
-        #   StreamViewType: NEW_IMAGE
         TableName: ${self:provider.environment.IMAGES_TABLE}
         GlobalSecondaryIndexes:
           - IndexName: ${self:provider.environment.IMAGE_ID_INDEX}
